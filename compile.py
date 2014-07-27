@@ -4,12 +4,11 @@ from collections import defaultdict
 
 
 def compile(release_doc_list):
-    [release_doc] = release_doc_list
     release_by_ocid = defaultdict(list)
-
-    for release in release_doc['releases']:
-        ocid = release['releaseMeta']['ocid']
-        release_by_ocid[ocid].append(release)
+    for release_doc in release_doc_list:
+        for release in release_doc['releases']:
+            ocid = release['releaseMeta']['ocid']
+            release_by_ocid[ocid].append(release)
 
     records = [
         dict(ocid=ocid, releases=releases)

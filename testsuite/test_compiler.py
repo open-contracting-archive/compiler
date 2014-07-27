@@ -89,3 +89,19 @@ def test_compile_same_ocid():
     )
 
     assert compile([doc_in]) == doc_out
+
+
+def test_multiple_documents_same_ocid():
+    doc_in_list = [
+        releases_doc(release('foo id', total_value='1234')),
+        releases_doc(release('foo id', total_value='5678')),
+    ]
+
+    doc_out = records_doc(
+        dict(ocid='foo id', releases=[
+            release('foo id', total_value='1234'),
+            release('foo id', total_value='5678'),
+        ]),
+    )
+
+    assert compile(doc_in_list) == doc_out
