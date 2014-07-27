@@ -15,7 +15,7 @@ Clone this repository, then run `pip install -r requirements.txt`.
 ./compile releases1.json releases2.json > records.json
 
 # read from stdin
-./compile - > records.json
+cat releases.json | ./compile - > records.json
 ```
 
 
