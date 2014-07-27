@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 from collections import defaultdict
 
 
@@ -19,3 +21,13 @@ def compile(release_doc_list):
         'publishingMeta': release_doc['publishingMeta'],
         'records': records,
     }
+
+
+if __name__ == '__main__':
+    import sys
+    import simplejson as json
+
+    doc_in_list = []
+    doc_in_list.append(json.load(sys.stdin))
+    doc_out = compile(doc_in_list)
+    json.dump(doc_out, sys.stdout, indent=2)
