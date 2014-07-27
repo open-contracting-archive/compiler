@@ -27,6 +27,15 @@ if __name__ == '__main__':
     import simplejson as json
 
     doc_in_list = []
-    doc_in_list.append(json.load(sys.stdin))
+
+    for filename in sys.argv[1:]:
+        if filename == '-':
+            doc_in_list.append(json.load(sys.stdin))
+
+        else:
+            with open(filename, 'rb') as f:
+                doc_in_list.append(json.load(f))
+
     doc_out = compile(doc_in_list)
+
     json.dump(doc_out, sys.stdout, indent=2)
