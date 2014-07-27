@@ -41,76 +41,51 @@ def release(ocid, total_value=''):
     }
 
 
+def releases_doc(*releases):
+    return {
+        "publisher": dict(name='foo', scheme='sch', uid='the_uid', uri='uri'),
+        "publishingMeta": dict(date='2014-07-26'),
+        "releases": list(releases),
+    }
+
+
+def records_doc(*records):
+    return {
+        "publisher": dict(name='foo', scheme='sch', uid='the_uid', uri='uri'),
+        "publishingMeta": dict(date='2014-07-26'),
+        "records": list(records),
+    }
+
+
 def test_compile_empty():
-    doc_in = {
-        "publisher": dict(name='foo', scheme='sch', uid='the_uid', uri='uri'),
-        "publishingMeta": dict(date='2014-07-26'),
-        "releases": [],
-    }
-
-    doc_out = {
-        "publisher": dict(name='foo', scheme='sch', uid='the_uid', uri='uri'),
-        "publishingMeta": dict(date='2014-07-26'),
-        "records": [],
-    }
-
-    assert compile([doc_in]) == doc_out
+    assert compile([releases_doc()]) == records_doc()
 
 
 def test_compile_different_ocid():
-    doc_in = {
-        "publisher": dict(name='foo', scheme='sch', uid='the_uid', uri='uri'),
-        "publishingMeta": dict(date='2014-07-26'),
-        "releases": [
-            release('foo id', total_value='1234'),
-            release('bar id', total_value='5678'),
-        ],
-    }
+    doc_in = releases_doc(
+        release('foo id', total_value='1234'),
+        release('bar id', total_value='5678'),
+    )
 
-    doc_out = {
-        "publisher": dict(name='foo', scheme='sch', uid='the_uid', uri='uri'),
-        "publishingMeta": dict(date='2014-07-26'),
-        "records": [
-            {
-                "ocid": "bar id",
-                "releases": [
-                    release('bar id', total_value='5678'),
-                ],
-            },
-            {
-                "ocid": "foo id",
-                "releases": [
-                    release('foo id', total_value='1234'),
-                ],
-            },
-        ],
-    }
+    doc_out = records_doc(
+        dict(ocid='bar id', releases=[release('bar id', total_value='5678')]),
+        dict(ocid='foo id', releases=[release('foo id', total_value='1234')]),
+    )
 
     assert compile([doc_in]) == doc_out
 
 
 def test_compile_same_ocid():
-    doc_in = {
-        "publisher": dict(name='foo', scheme='sch', uid='the_uid', uri='uri'),
-        "publishingMeta": dict(date='2014-07-26'),
-        "releases": [
+    doc_in = releases_doc(
+        release('foo id', total_value='1234'),
+        release('foo id', total_value='5678'),
+    )
+
+    doc_out = records_doc(
+        dict(ocid='foo id', releases=[
             release('foo id', total_value='1234'),
             release('foo id', total_value='5678'),
-        ],
-    }
-
-    doc_out = {
-        "publisher": dict(name='foo', scheme='sch', uid='the_uid', uri='uri'),
-        "publishingMeta": dict(date='2014-07-26'),
-        "records": [
-            {
-                "ocid": "foo id",
-                "releases": [
-                    release('foo id', total_value='1234'),
-                    release('foo id', total_value='5678'),
-                ],
-            },
-        ],
-    }
+        ]),
+    )
 
     assert compile([doc_in]) == doc_out
