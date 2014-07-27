@@ -1,4 +1,4 @@
-from compile import compile
+from compile import compile, RECORDS_SCHEMA_URI
 
 
 def release(ocid, total_value=''):
@@ -51,6 +51,7 @@ def releases_doc(*releases):
 
 def records_doc(*records):
     return {
+        "$schema": RECORDS_SCHEMA_URI,
         "publisher": dict(name='foo', scheme='sch', uid='the_uid', uri='uri'),
         "publishingMeta": dict(date='2014-07-26'),
         "records": list(records),
