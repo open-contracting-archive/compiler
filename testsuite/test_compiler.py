@@ -1,7 +1,7 @@
 from compile import compile
 
 
-def release(ocid):
+def release(ocid, total_value=''):
     return {
         "releaseMeta": {
             "ocid": ocid,
@@ -16,7 +16,7 @@ def release(ocid):
         "formation": {
             "notice": "",
             "itemsToBeProcured": [],
-            "totalValue": "",
+            "totalValue": total_value,
             "method": "Open",
             "methodJustification": "",
             "selectionCriteria": "Lowest Cost",
@@ -57,12 +57,45 @@ def test_compile_empty():
     assert compile([doc_in]) == doc_out
 
 
-def test_compile_one():
+def test_compile_different_ocid():
     doc_in = {
         "publisher": dict(name='foo', scheme='sch', uid='the_uid', uri='uri'),
         "publishingMeta": dict(date='2014-07-26'),
         "releases": [
-            release('foo id'),
+            release('foo id', total_value='1234'),
+            release('bar id', total_value='5678'),
+        ],
+    }
+
+    doc_out = {
+        "publisher": dict(name='foo', scheme='sch', uid='the_uid', uri='uri'),
+        "publishingMeta": dict(date='2014-07-26'),
+        "records": [
+            {
+                "ocid": "bar id",
+                "releases": [
+                    release('bar id', total_value='5678'),
+                ],
+            },
+            {
+                "ocid": "foo id",
+                "releases": [
+                    release('foo id', total_value='1234'),
+                ],
+            },
+        ],
+    }
+
+    assert compile([doc_in]) == doc_out
+
+
+def test_compile_same_ocid():
+    doc_in = {
+        "publisher": dict(name='foo', scheme='sch', uid='the_uid', uri='uri'),
+        "publishingMeta": dict(date='2014-07-26'),
+        "releases": [
+            release('foo id', total_value='1234'),
+            release('foo id', total_value='5678'),
         ],
     }
 
@@ -72,7 +105,10 @@ def test_compile_one():
         "records": [
             {
                 "ocid": "foo id",
-                "releases": [release('foo id')],
+                "releases": [
+                    release('foo id', total_value='1234'),
+                    release('foo id', total_value='5678'),
+                ],
             },
         ],
     }
