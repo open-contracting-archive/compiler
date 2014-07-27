@@ -2,6 +2,10 @@
 
 from collections import defaultdict
 
+RECORDS_SCHEMA_URI = (
+    'https://raw.githubusercontent.com/open-contracting/standard/'
+    'master/standard/schema/record-schema.json')
+
 
 def compile(release_doc_list):
     release_by_ocid = defaultdict(list)
@@ -16,6 +20,7 @@ def compile(release_doc_list):
     ]
 
     return {
+        '$schema': RECORDS_SCHEMA_URI,
         'publisher': release_doc['publisher'],
         'publishingMeta': release_doc['publishingMeta'],
         'records': records,
