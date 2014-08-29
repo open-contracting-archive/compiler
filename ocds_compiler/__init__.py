@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 import json
 from collections import defaultdict
 
@@ -44,7 +43,7 @@ def compile_linked(uri_list):
         split = uri.split('//')
         protocol = split[0]
         if protocol != 'file:':
-            raise NotImplementedError
+            raise NotImplementedError, "URI must of type file:///"
 
         # Open the file and add the json
         file_path = split[1]
@@ -74,22 +73,3 @@ def compile_linked(uri_list):
         "packages": uri_list,
         "records": records
     }
-
-
-if __name__ == '__main__':
-    import sys
-    import simplejson as json
-
-    doc_in_list = []
-
-    for filename in sys.argv[1:]:
-        if filename == '-':
-            doc_in_list.append(json.load(sys.stdin))
-
-        else:
-            with open(filename, 'rb') as f:
-                doc_in_list.append(json.load(f))
-
-    doc_out = compile(doc_in_list)
-
-    json.dump(doc_out, sys.stdout, indent=2)
