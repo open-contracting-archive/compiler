@@ -1,63 +1,9 @@
-from ocds_compiler import compile, RECORDS_SCHEMA_URI
-
-
-def release(ocid, total_value=''):
-    return {
-        "ocid": ocid,
-        "releaseID": "",
-        "releaseTag": "planning",
-        "locale": "",
-        "buyer": {
-            "id": {"name": "", "scheme": "", "uid": "", "uri": ""},
-        },
-        "planning": {},
-        "formation": {
-            "notice": "",
-            "itemsToBeProcured": [],
-            "totalValue": total_value,
-            "method": "Open",
-            "methodJustification": "",
-            "selectionCriteria": "Lowest Cost",
-            "selectionDetails": "",
-            "submissionMethod": "Electronic Auction",
-            "submissionDetails": "",
-            "tenderPeriod": "",
-            "clarificationPeriod": "",
-            "clarifications": False,
-            "awardPeriod": "",
-            "numberOfBidders": 0,
-            "numberOfBids": 0,
-            "bidders": [],
-            "procuringEntity": {
-                "id": {"name": "", "scheme": "", "uid": "", "uri": ""},
-            },
-            "attachments": [],
-        },
-        "award": {},
-        "contract": {},
-        "performance": {},
-    }
-
-
-def releases_doc(*releases):
-    return {
-        "publisher": dict(name='foo', scheme='sch', uid='the_uid', uri='uri'),
-        "date": dict(date='2014-07-26'),
-        "releases": list(releases),
-    }
-
-
-def records_doc(*records):
-    return {
-        "$schema": RECORDS_SCHEMA_URI,
-        "publisher": dict(name='foo', scheme='sch', uid='the_uid', uri='uri'),
-        "date": dict(date='2014-07-26'),
-        "records": list(records),
-    }
+from ocds_compiler import compile_full
+from .utils import release, releases_doc, records_doc
 
 
 def test_compile_empty():
-    assert compile([releases_doc()]) == records_doc()
+    assert compile_full([releases_doc()]) == records_doc()
 
 
 def test_compile_different_ocid():
@@ -71,7 +17,7 @@ def test_compile_different_ocid():
         dict(ocid='foo id', releases=[release('foo id', total_value='1234')]),
     )
 
-    assert compile([doc_in]) == doc_out
+    assert compile_full([doc_in]) == doc_out
 
 
 def test_compile_same_ocid():
@@ -87,7 +33,7 @@ def test_compile_same_ocid():
         ]),
     )
 
-    assert compile([doc_in]) == doc_out
+    assert compile_full([doc_in]) == doc_out
 
 
 def test_multiple_documents_same_ocid():
@@ -103,4 +49,4 @@ def test_multiple_documents_same_ocid():
         ]),
     )
 
-    assert compile(doc_in_list) == doc_out
+    assert compile_full(doc_in_list) == doc_out

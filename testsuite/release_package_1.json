@@ -1,0 +1,31 @@
+{
+    "publisher": {
+        "name": "Test publisher",
+        "scheme": "",
+        "uid": "",
+        "uri": ""
+    },
+    "date": "",
+    "license": "",
+    "releases": [
+        {
+            "ocid": "OCID_1",
+            "releaseID": "Test-20140829-50098ec0-7821-47a5-8c45-f5e81f229852",
+            "releaseTag": "planning",
+            "locale": "",
+            "formation": {
+                "notice": {
+                    "id": "Notice1",
+                    "uri": "",
+                    "publishedDate": "",
+                    "isAmendment": false,
+                    "amendment": {
+                        "amendmentDate": "",
+                        "amendedFields": "",
+                        "justification": ""
+                    }
+                }
+            }
+        }
+    ]
+}

@@ -1,0 +1,50 @@
+{
+    "publisher": {
+        "name": "Test publisher",
+        "scheme": "",
+        "uid": "",
+        "uri": ""
+    },
+    "date": "",
+    "license": "",
+    "releases": [
+        {
+            "ocid": "OCID_2",
+            "releaseID": "Test-20140829-50098ec0-7821-47a5-8c45-f5e81f229852",
+            "releaseTag": "planning",
+            "locale": "",
+            "formation": {
+                "notice": {
+                    "id": "Notice1",
+                    "uri": "",
+                    "publishedDate": "2012-01-01",
+                    "isAmendment": false,
+                    "amendment": {
+                        "amendmentDate": "",
+                        "amendedFields": "",
+                        "justification": ""
+                    }
+                }
+            }
+        },
+        {
+            "ocid": "OCID_2",
+            "releaseID": "Test-20140829-c575df76-ce4e-48ba-b068-c6cd3f0f122",
+            "releaseTag": "planning",
+            "locale": "",
+            "formation": {
+                "notice": {
+                    "id": "Notice1",
+                    "uri": "",
+                    "publishedDate": "2012-01-02",
+                    "isAmendment": true,
+                    "amendment": {
+                        "amendmentDate": "",
+                        "amendedFields": "",
+                        "justification": ""
+                    }
+                }
+            }
+        }
+    ]
+}
