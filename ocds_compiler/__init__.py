@@ -11,7 +11,7 @@ def compile(release_doc_list):
     release_by_ocid = defaultdict(list)
     for release_doc in release_doc_list:
         for release in release_doc['releases']:
-            ocid = release['releaseMeta']['ocid']
+            ocid = release['ocid']
             release_by_ocid[ocid].append(release)
 
     records = [
@@ -22,7 +22,7 @@ def compile(release_doc_list):
     return {
         '$schema': RECORDS_SCHEMA_URI,
         'publisher': release_doc['publisher'],
-        'publishingMeta': release_doc['publishingMeta'],
+        'date': release_doc['date'],
         'records': records,
     }
 
