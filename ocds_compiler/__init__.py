@@ -53,7 +53,7 @@ def compile_linked(uri_list):
         for release in release_doc['releases']:
             ocid = release['ocid']
             release_by_ocid[ocid].append({
-                "name": "",
+                "name": release['releaseID'],
                 "scheme": "",
                 "uid": release['releaseID'],
                 "uri": uri
@@ -69,7 +69,8 @@ def compile_linked(uri_list):
             "uid": "",
             "uri": ""
         },
-        "date": "",
+        "uri": "",
+        "publishedDate": "",
         "packages": uri_list,
         "records": records
     }
