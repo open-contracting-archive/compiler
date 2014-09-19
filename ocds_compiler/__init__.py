@@ -54,7 +54,7 @@ def compile_linked(uri_list):
             ocid = release['ocid']
             release_by_ocid[ocid].append({
                 "name": release['releaseID'],
-                "scheme": "",
+                "scheme": None,
                 "uid": release['releaseID'],
                 "uri": uri
             })
@@ -64,13 +64,13 @@ def compile_linked(uri_list):
     return {
         "$schema": RECORDS_SCHEMA_URI,
         "publisher": {
-            "name": "",
-            "scheme": "",
-            "uid": "",
-            "uri": ""
-        },
-        "uri": "",
-        "publishedDate": "",
+            #"name": None,
+            #"scheme": None,
+            #"uid": None,
+            #"uri": None
+       },
+        #"uri": None,
+        #"publishedDate": None,
         "packages": uri_list,
         "records": records
     }
