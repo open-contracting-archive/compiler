@@ -28,7 +28,7 @@ def compile_full(release_doc_list):
     return {
         "$schema": RECORDS_SCHEMA_URI,
         "publisher": release_doc['publisher'],
-        "date": release_doc['date'],
+        "publishedDate": release_doc['publishedDate'],
         #"packages": [],  # TODO Fix tests to meet latest spec
         'records': records,
     }
@@ -53,9 +53,9 @@ def compile_linked(uri_list):
         for release in release_doc['releases']:
             ocid = release['ocid']
             release_by_ocid[ocid].append({
-                "name": release['releaseID'],
+                "name": release['id'],
                 "scheme": None,
-                "uid": release['releaseID'],
+                "uid": release['id'],
                 "uri": uri
             })
 
